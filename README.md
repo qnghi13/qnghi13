@@ -5,7 +5,7 @@
 
 <p align="center">
   <a href="https://github.com/qnghi13">
-    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=3000&pause=800&color=7F5AF0&center=true&vCenter=true&width=620&lines=AI+Engineer+Intern+candidate;Building+RAG+%26+Agentic+Systems;Real-time+Computer+Vision;Data+Science+%40+VNUHCM+%E2%80%93+University+of+Science" alt="Typing SVG" />
+    <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=22&duration=3000&pause=800&color=7F5AF0&center=true&vCenter=true&width=620&lines=AI+Engineer+Intern+candidate;Building+Verified+Data+Agents;Building+RAG+%26+Agentic+Systems;Real-time+Computer+Vision;Data+Science+%40+VNUHCM+%E2%80%93+University+of+Science" alt="Typing SVG" />
   </a>
 </p>
 
@@ -18,6 +18,7 @@
 ## 🧠 About Me
 
 - 🎓 Final-year **Data Science** student at **VNUHCM – University of Science**
+- 🛠️ Building **DA-Agent**, a sandboxed data-analyst agent with verified answers and a measured eval harness
 - 🤖 Focus: **AI Engineering**, **Agent Systems** and **Computer Vision**
 - 🌱 Currently learning: **production-grade agentic systems**
 
@@ -38,34 +39,48 @@
 
 ## 🚀 Featured Projects
 
+### 🤖 [DA-Agent](https://github.com/qnghi13/DA-Agent): Data Analyst Agent for Messy Files
+
+> Upload CSV, Excel or SQLite files and ask questions in plain language. Every answer traces back to the SQL that produced it, and code checks it before you see it.
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Holdout%20correct-60%25-2CB67D?style=for-the-badge" alt="Holdout correct 60%" />
+  <img src="https://img.shields.io/badge/Abstained-9%25-7F5AF0?style=for-the-badge" alt="Abstained 9%" />
+  <img src="https://img.shields.io/badge/Cost-%240.30%20%2F%20150%20questions-2CB1BC?style=for-the-badge" alt="Cost $0.30 per 150 questions" />
+</p>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/qnghi13/DA-Agent/main/docs/images/architecture-dark.svg" />
+  <img src="https://raw.githubusercontent.com/qnghi13/DA-Agent/main/docs/images/architecture-light.svg" width="100%" alt="DA-Agent architecture drawn as one bench: browser, API, Postgres, worker, LLM client, runner and a sealed sandbox" />
+</picture>
+
+- **LangGraph agent** that plans, writes SQL, and submits answers that code verifies: numbers must come from query results, otherwise it repairs twice, then abstains.
+- **Sandboxed execution:** a read-only SQL guard, one dataset per container, no network and no secrets.
+- **Messy files become a reviewable spec** (types, formats, rows to exclude) that the user approves before any query runs.
+- **Operable and measured:** Postgres job queue with crash-safe checkpoints, token and money budgets, OpenTelemetry traces, and an evaluation harness with fixed dev and holdout splits. 33 architecture decision records.
+- Holdout scores come from the DataMate benchmark of messy Vietnamese retail data, 150 unseen questions, using Groq `gpt-oss-20b`.
+
+<p align="center">
+  <img src="https://img.shields.io/badge/LangGraph-1C3C3C?style=flat-square&logo=langgraph&logoColor=white" alt="LangGraph" />
+  <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI" />
+  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/DuckDB-FFF000?style=flat-square&logo=duckdb&logoColor=black" alt="DuckDB" />
+  <img src="https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React" />
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white" alt="Docker" />
+  <img src="https://img.shields.io/badge/OpenTelemetry-000000?style=flat-square&logo=opentelemetry&logoColor=white" alt="OpenTelemetry" />
+</p>
+
 ### ⚖️ [Legal RAG Bot](https://github.com/qnghi13/legal-rag-bot): Vietnamese Labor Law Assistant
 
 > Answers only from retrieved legal text, and every citation is verified before the answer is returned.
 
-```mermaid
-flowchart LR
-    Q([💬 Question]):::input --> R[Query<br/>Rewriter]:::llm
-    R --> S[Chroma<br/>Semantic]:::ret
-    R --> B[BM25<br/>Keyword]:::ret
-    S --> F{Hybrid<br/>Fusion}:::ret
-    B --> F
-    F --> X[Cross-Encoder<br/>Reranker]:::rank
-    X --> G[(Neo4j<br/>Legal Graph)]:::gdb
-    G --> L[Groq<br/>LLM]:::llm
-    L --> V{Citation<br/>Verifier}:::guard
-    V --> A([✅ Answer]):::out
-
-    classDef input fill:#7F5AF0,stroke:#7F5AF0,color:#fff
-    classDef llm fill:#2CB1BC,stroke:#2CB1BC,color:#fff
-    classDef ret fill:#3B82F6,stroke:#3B82F6,color:#fff
-    classDef rank fill:#F59E0B,stroke:#F59E0B,color:#fff
-    classDef gdb fill:#4581C3,stroke:#4581C3,color:#fff
-    classDef guard fill:#EF4444,stroke:#EF4444,color:#fff
-    classDef out fill:#2CB67D,stroke:#2CB67D,color:#fff
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/legal-rag-architecture-dark.svg" />
+  <img src="assets/legal-rag-architecture-light.svg" width="100%" alt="Legal RAG Bot architecture drawn as one bench: ingest, BM25, Chroma, Neo4j graph, reranker, Groq LLM, citation verifier and Streamlit UI" />
+</picture>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/qnghi13/legal-rag-bot/main/image/QA.png" width="70%" alt="Legal RAG Bot chat interface" />
+  <img src="https://raw.githubusercontent.com/qnghi13/legal-rag-bot/main/image/QA.png" width="60%" alt="Legal RAG Bot chat interface" />
 </p>
 
 <p align="center">
@@ -87,19 +102,10 @@ flowchart LR
   <img src="https://img.shields.io/badge/Inference-4.6%20ms-2CB1BC?style=for-the-badge" alt="Inference 4.6 ms" />
 </p>
 
-```mermaid
-flowchart LR
-    C([📷 Camera]):::input --> Y[YOLOv8n<br/>Detector]:::model
-    Y --> SM{Time-based<br/>State Machine}:::logic
-    SM -->|fall confirmed| T([📲 Telegram Alert]):::alert
-    SM --> W([🖥️ Live Dashboard]):::out
-
-    classDef input fill:#7F5AF0,stroke:#7F5AF0,color:#fff
-    classDef model fill:#111F68,stroke:#111F68,color:#fff
-    classDef logic fill:#F59E0B,stroke:#F59E0B,color:#fff
-    classDef alert fill:#EF4444,stroke:#EF4444,color:#fff
-    classDef out fill:#2CB67D,stroke:#2CB67D,color:#fff
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/fall-detection-architecture-dark.svg" />
+  <img src="assets/fall-detection-architecture-light.svg" width="100%" alt="Fall Detection System architecture drawn as one bench: camera, YOLOv8n detector, fall timer, FastAPI backend, SQLite storage, Telegram notifier and React dashboard" />
+</picture>
 
 | Model | Params | Inference | mAP@50 | Fall Recall |
 | :--- | ---: | ---: | ---: | ---: |
